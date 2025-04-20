@@ -29,7 +29,7 @@ function NavbarWithButtons() {
 
           {/* Navigation Buttons */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}> {/* Hide on extra-small screens */}
-            <Button color="inherit" onClick={() => handleNavClick('Profile')}>
+            <Button color="inherit" onClick={() => handleNavClick('FrontPage')}>
               Profile
             </Button>
             <Button color="inherit" onClick={() => handleNavClick('Lessons')}>

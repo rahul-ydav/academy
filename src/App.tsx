@@ -17,7 +17,7 @@ function App() {
     <Navbar></Navbar>
       <LessonsProvider>
       <Routes>
-          <Route index element={<FrontPage />} />
+          <Route path="/FrontPage" element={<FrontPage />} />
           <Route path="/Lessons" element={<Lessons />} />
           <Route path="/Progress" element={<Progress />} />
           <Route path="/" element={<Login />}>
