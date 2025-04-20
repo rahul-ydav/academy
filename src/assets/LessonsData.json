@@ -1,0 +1,56 @@
+[
+    {
+        "title" : "Algorithms",
+        "tableData" : [{
+                "name": "Searching",
+                "leetcode": "https://leetcode.com/problems/two-sum/",
+                "youtube": "https://www.youtube.com/watch?v=2oOe0t1V8v4",
+                "article": "https://www.geeksforgeeks.org/two-sum-problem-in-java/",
+                "level": "Easy",
+                "status": "Pending"
+            }, {
+                "name": "Sorting",
+                "leetcode": "https://leetcode.com/problems/two-sum/",
+                "youtube": "https://www.youtube.com/watch?v=2oOe0t1V8v4",
+                "article": "https://www.geeksforgeeks.org/two-sum-problem-in-java/",
+                "level": "Easy",
+                "status": "Pending"
+            },
+            {
+                "name": "Recursion",
+                "leetcode": "https://leetcode.com/problems/two-sum/",
+                "youtube": "https://www.youtube.com/watch?v=2oOe0t1V8v4",
+                "article": "https://www.geeksforgeeks.org/two-sum-problem-in-java/",
+                "level": "Easy",
+                "status": "Pending"
+            }
+        ]
+    },
+    {
+        "title" : "Data Structure",
+        "tableData" : [{
+                "name": "Two Sum",
+                "leetcode": "https://leetcode.com/problems/two-sum/",
+                "youtube": "https://www.youtube.com/watch?v=2oOe0t1V8v4",
+                "article": "https://www.geeksforgeeks.org/two-sum-problem-in-java/",
+                "level": "Easy",
+                "status": "Pending"
+            }, {
+                "name": "Three Sum",
+                "leetcode": "https://leetcode.com/problems/two-sum/",
+                "youtube": "https://www.youtube.com/watch?v=2oOe0t1V8v4",
+                "article": "https://www.geeksforgeeks.org/two-sum-problem-in-java/",
+                "level": "Easy",
+                "status": "Pending"
+            },
+            {
+                "name": "Permutations",
+                "leetcode": "https://leetcode.com/problems/two-sum/",
+                "youtube": "https://www.youtube.com/watch?v=2oOe0t1V8v4",
+                "article": "https://www.geeksforgeeks.org/two-sum-problem-in-java/",
+                "level": "Easy",
+                "status": "Pending"
+            }
+        ]
+    }
+]

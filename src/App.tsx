@@ -1,12 +1,13 @@
-import './App.css'
 
-import Login from './Pages/Login.jsx';
+import './App.css';
+
+import FrontPage from './Pages/FrontPage.jsx';
+
 
 function App() {
   return (
     <>  
-      <Login></Login>
-
+      <FrontPage></FrontPage>
     </>
   )
 }
