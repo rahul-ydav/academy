@@ -55,7 +55,7 @@ function BasicTable({data, levels}) {
                             key={row.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row" onClick={(e) => statusClick(e, row)} > <input type='checkbox' checked={row.status==='Done'}/> {row.name} </TableCell>
+                            <TableCell component="th" scope="row" > <input type='checkbox' checked={row.status==='Done'} onChange={(e) => statusClick(e, row)} /> {row.name} </TableCell>
                             <TableCell align="right">{<Link href={row.leetcode}>practice</Link>}</TableCell>
                             <TableCell align="right">{<Link href={row.youtube}>watch</Link>}</TableCell>
                             <TableCell align="right">{<Link href={row.article}>read</Link>}</TableCell>
