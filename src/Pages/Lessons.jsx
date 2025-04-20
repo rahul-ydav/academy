@@ -11,6 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from '@mui/material';
 import LessonsData from '../assets/LessonsData.json';
+import { useContext } from 'react';
+import LessonsContext from '../Context/LessonContext.jsx';
 
 
 
@@ -28,10 +30,12 @@ function BasicTable({data, levels}) {
         const statusEle = document.getElementById(`status${row.name}`);
         if(e.target.checked){
             statusEle.innerHTML = "Done";
+            data.find(e => e.name === row.name).status = "Done";
             levels[`set${row.level}`](levels[row.level.toLowerCase()]+1);
         }
         else {
             statusEle.innerHTML = "Pending";
+            data.find(e => e.name === row.name).status = "Pending";
             levels[`set${row.level}`](Math.max(levels[row.level.toLowerCase()]-1, 0));
         }
     }
@@ -51,7 +55,7 @@ function BasicTable({data, levels}) {
                             key={row.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row" onClick={(e) => statusClick(e, row)}> <input type='checkbox'/> {row.name} </TableCell>
+                            <TableCell component="th" scope="row" onClick={(e) => statusClick(e, row)} > <input type='checkbox' checked={row.status==='Done'}/> {row.name} </TableCell>
                             <TableCell align="right">{<Link href={row.leetcode}>practice</Link>}</TableCell>
                             <TableCell align="right">{<Link href={row.youtube}>watch</Link>}</TableCell>
                             <TableCell align="right">{<Link href={row.article}>read</Link>}</TableCell>
@@ -68,9 +72,10 @@ function BasicTable({data, levels}) {
 
 
 
-export default function DisabledAccordion({levels}) {
+export default function DisabledAccordion() {
+    const levels = useContext(LessonsContext);
     return (
-        <>
+        <section className='section'>
 
         {LessonsData.map((lesson, idx) =>{
             return(<Accordion key={lesson.title}>
@@ -86,7 +91,7 @@ export default function DisabledAccordion({levels}) {
                 </AccordionDetails>
             </Accordion>)
         })}
-        </>
+        </section>
     );
 }
 

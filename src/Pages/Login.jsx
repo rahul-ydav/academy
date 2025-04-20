@@ -5,7 +5,7 @@
 
 function Login(){
 
-    return (<>
+    return (<section className='section'>
         <form id="login">
             <h3>Login</h3>
             <div id="loginDiv">
@@ -16,7 +16,7 @@ function Login(){
             <submit style={{backgroundColor: 'blue', width: '100%', marginTop:'5px', borderRadius: '.2rem'}}>Login</submit>
             </div>
         </form>
-    </>);
+    </section>);
 }
 
 export default Login;
