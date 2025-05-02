@@ -1,10 +1,11 @@
 import {useForm} from 'react-hook-form';
+import BACKEND_POINT from '../../BackendPoint';
 
 function Login(){
 
     const onSubmit = async(data) => {
         console.log("I am pressed, ",data);
-        let res = await window.fetch('http://localhost:8000/login', {
+        let res = await window.fetch(BACKEND_POINT, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
