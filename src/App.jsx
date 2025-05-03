@@ -6,6 +6,8 @@ import Lessons from './Pages/Lessons.jsx';
 import Progress from './Pages/Progress.jsx';
 import Navbar from './Components/Navbar.jsx';
 import { LessonsProvider } from './Context/LessonContext.jsx';
+import PrivateRoutes from './Components/PrivateRoutes.jsx';
+
 
 
 import './App.css';
@@ -17,9 +19,11 @@ function App() {
     <Navbar></Navbar>
       <LessonsProvider>
       <Routes>
+        {/* <PrivateRoutes> */}
           <Route path="/FrontPage" element={<FrontPage />} />
           <Route path="/Lessons" element={<Lessons />} />
           <Route path="/Progress" element={<Progress />} />
+        {/* </PrivateRoutes> */}
           <Route path="/" element={<Login />}>
           <Route path="*" element={<Login />} />
         </Route>

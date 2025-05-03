@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from '@mui/material';
 import LessonsData from '../assets/LessonsData.json';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import LessonsContext from '../Context/LessonContext.jsx';
 
 
@@ -74,11 +74,17 @@ function BasicTable({data, levels}) {
 
 export default function DisabledAccordion() {
     const levels = useContext(LessonsContext);
+
+    const [expanded, setExpanded] = useState();
+
+    const handleChange = (panel) => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+    };
     return (
         <section className='section'>
 
         {LessonsData.map((lesson, idx) =>{
-            return(<Accordion key={lesson.title}>
+            return(<Accordion key={lesson.title} onChange={handleChange(`panel${idx+1}`)} expanded={expanded === `panel${idx+1}`}>
                 <AccordionSummary
                     expandIcon={"+"}
                     aria-controls={`panel${idx+1}-content`}
