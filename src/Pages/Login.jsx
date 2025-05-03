@@ -1,18 +1,19 @@
 import {useForm} from 'react-hook-form';
 import BACKEND_POINT from '../../BackendPoint';
+import { useNavigate } from 'react-router-dom';
 
 function Login(){
-
+    const navigate = useNavigate();
+    const page = 'FrontPage';
     const onSubmit = async(data) => {
-        console.log("I am pressed, ",data);
         let res = await window.fetch(`${BACKEND_POINT}/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         });
         const result = await res.json();
-        if (result.message === 'FrontPage') {
-            window.location.href = '/FrontPage';
+        if (result.message === page) {
+            navigate(`/${page}`);
         }
     }
 
