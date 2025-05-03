@@ -5,7 +5,7 @@ function Login(){
 
     const onSubmit = async(data) => {
         console.log("I am pressed, ",data);
-        let res = await window.fetch(BACKEND_POINT, {
+        let res = await window.fetch(`${BACKEND_POINT}/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
