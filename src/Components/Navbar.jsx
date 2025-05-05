@@ -9,10 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function NavbarWithButtons() {
   const navigate = useNavigate();
   const handleNavClick = (page) => {
-    console.log(`Navigating to ${page}...`);
     navigate(`/${page}`);
-    
-
   };
 
   return (
