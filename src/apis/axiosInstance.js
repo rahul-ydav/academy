@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
       switch (status) {
         case 401:
           console.error('Unauthorized access');
-          window.location.href = '/login'; // Redirect to login page
+          window.location.href = '/Login'; // Redirect to login page
           break;
         case 403:
           console.error('Forbidden access');
