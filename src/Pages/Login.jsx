@@ -1,14 +1,13 @@
 import {useForm} from 'react-hook-form';
-import BACKEND_POINT from '../../BackendPoint';
 import { useNavigate } from 'react-router-dom';
-import {loginAPI} from './../apis/login.js';
+import {AuthAPI} from './../apis/AuthAPI.js';
 
 function Login(){
     const navigate = useNavigate();
     const page = 'FrontPage';
     const onSubmit = async(data) => {
-        const result = await loginAPI.post(JSON.stringify(data));
-        if (result.message === page) {
+        const result = await AuthAPI.loginPost(JSON.stringify(data));
+        if (result.accessToken) {
             navigate(`/${page}`);
         }
     }

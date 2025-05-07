@@ -9,28 +9,18 @@ const axiosInstance = axios.create({
   },
 });
 
-// Request interceptor for adding auth tokens, logging, etc.
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // You can add authorization headers here
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers = config.headers || {};
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
-    
-    return config;
-  },
-  (error) => {
-    console.error('Request error:', error);
-    return Promise.reject(error);
-  }
-);
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     return config;
+//   },
+//   (error) => {
+//     console.error('Request error:', error);
+//     return Promise.reject(error);
+//   }
+// );
 
-// Response interceptor for handling common errors, data transformation, etc.
 axiosInstance.interceptors.response.use(
   (response) => {
-    // You can transform or normalize data here if needed
     return response;
   },
   (error) => {
@@ -40,6 +30,7 @@ axiosInstance.interceptors.response.use(
       switch (status) {
         case 401:
           console.error('Unauthorized access');
+          window.location.href = '/login'; // Redirect to login page
           break;
         case 403:
           console.error('Forbidden access');
