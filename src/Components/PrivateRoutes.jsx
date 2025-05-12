@@ -1,14 +1,12 @@
-import { useLayoutEffect }  from "react";
+import { useLayoutEffect, useState }  from "react";
 import { AuthAPI } from "../apis/AuthAPI.js";
-import { useNavigate } from "react-router-dom";
 function PrivateRoutes({ children }) {
 
-  const navigate = useNavigate();
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   useLayoutEffect(() => {
     async function verifyAuth() {
       const verifyAuth = await AuthAPI.verifyAuthPost();
-      console.log('author:: ',verifyAuth);
+      setIsAuthenticated(true);
       return children;
     }
     if(window.location.pathname!== '/Login')  verifyAuth();
@@ -16,7 +14,9 @@ function PrivateRoutes({ children }) {
   // navigate('/login');
 
   return (
-    <h1>Private Routes</h1>
+    <>
+    {isAuthenticated ? children : <h1>Loading...</h1>}
+    </>
   );
 
 }
