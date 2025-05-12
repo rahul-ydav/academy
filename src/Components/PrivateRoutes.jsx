@@ -8,10 +8,10 @@ function PrivateRoutes({ children }) {
   useLayoutEffect(() => {
     async function verifyAuth() {
       const verifyAuth = await AuthAPI.verifyAuthPost();
-      console.log(verifyAuth);
+      console.log('author:: ',verifyAuth);
       return children;
     }
-    verifyAuth();
+    if(window.location.pathname!== '/Login')  verifyAuth();
   }, []);
   // navigate('/login');
 

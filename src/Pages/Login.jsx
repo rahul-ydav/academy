@@ -6,10 +6,8 @@ function Login(){
     const navigate = useNavigate();
     const page = 'FrontPage';
     const onSubmit = async(data) => {
-        const result = await AuthAPI.loginPost(JSON.stringify(data));
-        if (result.accessToken) {
-            navigate(`/${page}`);
-        }
+        await AuthAPI.loginPost(JSON.stringify(data));
+        navigate(`/${page}`);
     }
 
     const {register, handleSubmit, formState: {errors}} = useForm({
