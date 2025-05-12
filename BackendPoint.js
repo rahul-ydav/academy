@@ -1,2 +1,1 @@
-export default 'https://backendacdemy.onrender.com';
-
+export default 'http://localhost:5173';
