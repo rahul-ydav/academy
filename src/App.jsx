@@ -1,5 +1,6 @@
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Router, Routes, Route, unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import history from "./Components/History.js";
 import Login from './Pages/Login.jsx';
 import FrontPage from './Pages/FrontPage.jsx';
 import Lessons from './Pages/Lessons.jsx';
@@ -16,7 +17,7 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
     <Navbar></Navbar>
       <LessonsProvider>
       <Routes>
@@ -31,7 +32,7 @@ function App() {
         </Route>
       </Routes>
       </LessonsProvider>
-    </BrowserRouter>
+    </HistoryRouter>
   )
 }
 

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import BackendPoint from '../../BackendPoint';
-
+import history from '../Components/History';
 const axiosInstance = axios.create({
   baseURL: BackendPoint,
-  timeout: 10000,
+  timeout: 1000000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -30,7 +30,8 @@ axiosInstance.interceptors.response.use(
       switch (status) {
         case 401:
           console.error('Unauthorized access');
-          window.location.href = '/Login'; // Redirect to login page
+          // window.location.href = '/Login' ; // Redirect to login page
+          history.push('/Login');
           break;
         case 403:
           console.error('Forbidden access');
