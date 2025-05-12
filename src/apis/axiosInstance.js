@@ -1,9 +1,8 @@
 import axios from 'axios';
-import BackendPoint from '../../BackendPoint';
 import history from '../Components/History';
 const axiosInstance = axios.create({
-  baseURL: BackendPoint,
-  timeout: 1000000,
+  baseURL: window.location.origin,
+  timeout: 100000,
   headers: {
     'Content-Type': 'application/json',
   },
