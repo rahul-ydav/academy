@@ -1,40 +1,39 @@
 
-import React, { use, useContext } from 'react';
-import LessonsContext from '../Context/LessonContext.jsx';
-import LessonsData from '../assets/LessonsData.json';
+import { useState, useEffect } from 'react';
+import { ProgressAPI } from '../apis/ProgressAPI';
 
 function Progress() {
-    const levels = useContext(LessonsContext);
-    let easyCount = 0;
-    let mediumCount = 0;
-    let hardCount = 0;
+	const [easy, setEasy] = useState(0);
+	const [medium, setMedium] = useState(0);
+	const [hard, setHard] = useState(0);
 
-    LessonsData.forEach(lesson => {
-        lesson.tableData.forEach(e => {
-            if (e.level === 'Easy') {
-                easyCount++;
-            } else if (e.level === 'Medium') {
-                mediumCount++;
-            } else if (e.level === 'Hard') {
-                hardCount++;
-            }
-        });
-    });
+	useEffect(() => {
+		const fetchProgress = async () => {
+			try {
+				const response = await ProgressAPI.get();
+				const { easy, medium, hard } = response;
+				setEasy(easy);
+				setMedium(medium);
+				setHard(hard);
+			} catch (error) {
+				console.error('Error fetching progress:', error);
+			}
+		};
 
-    const easyPercent = Math.round((levels.easy / easyCount) * 100);
-    const mediumPercent = Math.round((levels.medium / mediumCount) * 100);
-    const hardPercent = Math.round((levels.hard / hardCount) * 100);
-    
-    return (
-        <section className='section'>
-            <div id="Progress">
-                <h2>Progress Report</h2>
-                <div>Easy: {easyPercent}%</div>
-                <div>Medium: {mediumPercent}%</div>
-                <div>Hard: {hardPercent}%</div>
-            </div>
-        </section>
-    );
+		fetchProgress();
+	}, []);
+
+
+	return (
+		<section className='section'>
+			<div id="Progress">
+				<h2>Progress Report</h2>
+				<div>Easy: {easy}%</div>
+				<div>Medium: {medium}%</div>
+				<div>Hard: {hard}%</div>
+			</div>
+		</section>
+	);
 }
 
 export default Progress;

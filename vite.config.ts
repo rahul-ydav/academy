@@ -13,7 +13,7 @@ export default defineConfig({
       '/app': {
         target: BackendPoint, // Your backend server
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/app/, ''), // Optional: Remove /api prefix
+        // rewrite: (path) => path.replace(/^\/app/, ''), // Optional: Remove /api prefix
       },
     },
   },

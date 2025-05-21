@@ -1,31 +1,29 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
+#root {
+	width: 100vw;
+	height: 100vh;
+}
 
-#login{
-  border: 1px solid white;
-  border-radius: .2rem;
-  z-index: 2;
+#login {
+	border: 1px solid white;
+	border-radius: .2rem;
+	z-index: 2;
 }
 
 
-#loginDiv{
-  padding: 0 30px 30px 30px;
-  align-items: start;
-  display: flex;
-  flex-direction: column;
-  
+#loginDiv {
+	padding: 0 30px 30px 30px;
+	align-items: start;
+	display: flex;
+	flex-direction: column;
+
 }
 
-.section{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction: column;
-  width:100vw;
-  height: 100vh;
+.section {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 10%;
+	/* width: 100vw; */
+	/* height: 100vh; */
 }
-

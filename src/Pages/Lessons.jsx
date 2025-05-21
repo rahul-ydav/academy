@@ -1,102 +1,130 @@
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Link } from '@mui/material';
-import LessonsData from '../assets/LessonsData.json';
-import { useContext, useState } from 'react';
+import { Collapse, Table, Checkbox, Typography } from 'antd';
+import { useContext, useState, useEffect } from 'react';
+import { LessonsAPI } from '../apis/LessonsAPI';
 import LessonsContext from '../Context/LessonContext.jsx';
 
+const { Panel } = Collapse;
 
+function BasicTable({ data, levels, idx }) {
+	const handleStatusChange = (e, row) => {
+		const updatedStatus = e.target.checked ? 'Done' : 'Pending';
+		row.status = updatedStatus;
 
-function BasicTable({ data, levels }) {
-	const headers = [
-		{ "title": "Name", "align": "left" },
-		{ "title": "Leetcode link", "align": "right" },
-		{ "title": "YouTube link", "align": "right" },
-		{ "title": "Article link", "align": "right" },
-		{ "title": "Level", "align": "right" },
-		{ "title": "Status", "align": "right" }
+		const levelKey = row.level.toLowerCase();
+		const setter = levels[`set${row.level}`];
+
+		if (e.target.checked) {
+			setter(levels[levelKey] + 1);
+		} else {
+			setter(Math.max(levels[levelKey] - 1, 0));
+		}
+
+		LessonsAPI.put(row.id_lesson, updatedStatus);
+	};
+
+	const columns = [
+		{
+			title: 'Name',
+			dataIndex: 'name',
+			key: `name${idx}`,
+			render: (text, row) => (
+				<>
+					<Checkbox
+						checked={row.status === 'Done'}
+						onChange={(e) => handleStatusChange(e, row)}
+					/>
+					<span style={{ marginLeft: 8 }}>{text}</span>
+				</>
+			),
+		},
+		{
+			title: 'Leetcode link',
+			dataIndex: 'leetcode',
+			key: `leetcode${idx}`,
+			align: 'right',
+			render: (url) => <a href={url} target="_blank" rel="noopener noreferrer">practice</a>,
+		},
+		{
+			title: 'YouTube link',
+			dataIndex: 'youtube',
+			key: `youtube${idx}`,
+			align: 'right',
+			render: (url) => <a href={url} target="_blank" rel="noopener noreferrer">watch</a>,
+		},
+		{
+			title: 'Article link',
+			dataIndex: 'article',
+			key: `article${idx}`,
+			align: 'right',
+			render: (url) => <a href={url} target="_blank" rel="noopener noreferrer">read</a>,
+		},
+		{
+			title: 'Level',
+			dataIndex: 'level',
+			key: `levels${idx}`,
+			align: 'right',
+		},
+		{
+			title: 'Status',
+			dataIndex: 'status',
+			key: `status${idx}`,
+			align: 'right',
+		},
 	];
 
-	const statusClick = (e, row) => {
-		const statusEle = document.getElementById(`status${row.name}`);
-		if (e.target.checked) {
-			statusEle.innerHTML = "Done";
-			data.find(e => e.name === row.name).status = "Done";
-			levels[`set${row.level}`](levels[row.level.toLowerCase()] + 1);
-		}
-		else {
-			statusEle.innerHTML = "Pending";
-			data.find(e => e.name === row.name).status = "Pending";
-			levels[`set${row.level}`](Math.max(levels[row.level.toLowerCase()] - 1, 0));
-		}
-	}
 	return (
-		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650 }} aria-label="simple table">
-				<TableHead>
-					<TableRow>
-						{
-							headers.map((header, index) => <TableCell key={index} align={header.align}>{header.title}</TableCell>)
-						}
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{data.map((row) => (
-						<TableRow
-							key={row.name}
-							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-						>
-							<TableCell component="th" scope="row" > <input type='checkbox' checked={row.status === 'Done'} onChange={(e) => statusClick(e, row)} /> {row.name} </TableCell>
-							<TableCell align="right">{<Link href={row.leetcode}>practice</Link>}</TableCell>
-							<TableCell align="right">{<Link href={row.youtube}>watch</Link>}</TableCell>
-							<TableCell align="right">{<Link href={row.article}>read</Link>}</TableCell>
-							<TableCell align="right">{row.level}</TableCell>
-							<TableCell id={`status${row.name}`} align="right">{row.status}</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<Table
+			dataSource={[...data]}
+			columns={columns}
+			rowKey="id_lesson"
+			pagination={false}
+		/>
 	);
 }
 
-
-
-
-export default function DisabledAccordion() {
+export default function LessonsCollapse() {
 	const levels = useContext(LessonsContext);
+	const [activeKey, setActiveKey] = useState([]);
 
-	const [expanded, setExpanded] = useState();
-
-	const handleChange = (panel) => (event, newExpanded) => {
-		setExpanded(newExpanded ? panel : false);
+	const handleCollapseChange = (keys) => {
+		setActiveKey(keys);
 	};
-	return (
-		<section className='section'>
+	const [LessonsData, setLessonsData] = useState([]);
 
-			{LessonsData.map((lesson, idx) => {
-				return (<Accordion key={lesson.title} onChange={handleChange(`panel${idx + 1}`)} expanded={expanded === `panel${idx + 1}`}>
-					<AccordionSummary
-						expandIcon={"+"}
-						aria-controls={`panel${idx + 1}-content`}
-						id={`panel${idx + 1}-header`}
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await LessonsAPI.get();
+			setLessonsData(result);
+		};
+		fetchData();
+	}, []);
+
+	return (
+		<section
+			className="section"
+			style={{
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				width: '100%',
+			}}
+		>
+			<Collapse
+				accordion
+				activeKey={activeKey}
+				onChange={handleCollapseChange}
+				bordered
+				style={{ width: '80%' }}
+			>
+				{LessonsData.map((lesson, idx) => (
+					<Panel
+						header={<Typography.Text strong>{lesson.title}</Typography.Text>}
+						key={`panel${idx + 1}`}
 					>
-						<Typography component="span">{lesson.title}</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<BasicTable data={lesson.tableData} levels={levels} />
-					</AccordionDetails>
-				</Accordion>)
-			})}
+						<BasicTable data={lesson.tableData} levels={levels} idx={idx} />
+					</Panel>
+				))}
+			</Collapse>
 		</section>
 	);
 }
