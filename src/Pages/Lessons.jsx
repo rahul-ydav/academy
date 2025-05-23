@@ -1,25 +1,26 @@
 import { Collapse, Table, Checkbox, Typography } from 'antd';
 import { useContext, useState, useEffect } from 'react';
 import { LessonsAPI } from '../apis/LessonsAPI';
-import LessonsContext from '../Context/LessonContext.jsx';
 
 const { Panel } = Collapse;
 
-function BasicTable({ data, levels, idx }) {
+function BasicTable({ data, idx, setLessonsData }) {
 	const handleStatusChange = (e, row) => {
 		const updatedStatus = e.target.checked ? 'Done' : 'Pending';
-		row.status = updatedStatus;
+		const updatedLessonsData = prevLessonsData => prevLessonsData.map((lesson, lessonIdx) => {
+			if (lessonIdx !== idx) return lesson;
+			return {
+				...lesson,
+				tableData: lesson.tableData.map(item =>
+					item.id_lesson === row.id_lesson
+						? { ...item, status: updatedStatus }
+						: item
+				),
+			};
+		});
+		setLessonsData(updatedLessonsData);
 
-		const levelKey = row.level.toLowerCase();
-		const setter = levels[`set${row.level}`];
-
-		if (e.target.checked) {
-			setter(levels[levelKey] + 1);
-		} else {
-			setter(Math.max(levels[levelKey] - 1, 0));
-		}
-
-		LessonsAPI.put(row.id_lesson, updatedStatus);
+		(async () => { await LessonsAPI.put(row.id_lesson, updatedStatus) })();
 	};
 
 	const columns = [
@@ -83,12 +84,6 @@ function BasicTable({ data, levels, idx }) {
 }
 
 export default function LessonsCollapse() {
-	const levels = useContext(LessonsContext);
-	const [activeKey, setActiveKey] = useState([]);
-
-	const handleCollapseChange = (keys) => {
-		setActiveKey(keys);
-	};
 	const [LessonsData, setLessonsData] = useState([]);
 
 	useEffect(() => {
@@ -111,8 +106,7 @@ export default function LessonsCollapse() {
 		>
 			<Collapse
 				accordion
-				activeKey={activeKey}
-				onChange={handleCollapseChange}
+				// onChange={handleCollapseChange}
 				bordered
 				style={{ width: '80%' }}
 			>
@@ -121,7 +115,7 @@ export default function LessonsCollapse() {
 						header={<Typography.Text strong>{lesson.title}</Typography.Text>}
 						key={`panel${idx + 1}`}
 					>
-						<BasicTable data={lesson.tableData} levels={levels} idx={idx} />
+						<BasicTable data={lesson.tableData} idx={idx} setLessonsData={setLessonsData} />
 					</Panel>
 				))}
 			</Collapse>
