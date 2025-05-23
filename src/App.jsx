@@ -22,7 +22,7 @@ function App() {
 
 				<Route path="/FrontPage" element={<PrivateRoutes><FrontPage /></PrivateRoutes>} />
 				<Route path="/Lessons" element={<Lessons />} />
-				<Route path="/Progress" element={<PrivateRoutes><Progress /></PrivateRoutes>} />
+				<Route path="/Progress" element={<Progress />} />
 
 				<Route path="/Logout" element={<Logout />} />
 				<Route path="/" element={<Login />}>
